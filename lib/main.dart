@@ -44,10 +44,10 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final List<Map<String, dynamic>> chats = [
     {
-      'name': 'Alvin',
-      'message': 'Buru Ehhhh, Lama banget buset bocah',
+      'name': 'bb',
+      'message': 'haaiiiii bb',
       'time': '16:30',
-      'unread': 3,
+      'unread': 99,
       'color': Colors.blue,
     },
     {
@@ -333,7 +333,7 @@ class _HomePageState extends State<HomePage> {
               borderRadius: BorderRadius.circular(15),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
+                  color: Colors.black.withValues(alpha: 0.05),
                   blurRadius: 5,
                   offset: const Offset(0, 2),
                 ),
@@ -507,9 +507,9 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
 
-        statusItem('Duns', 'Today, 16:30', Colors.blue),
+        statusItem('acaaaa', 'Today, 16:30', Colors.blue),
 
-        statusItem('Fadlan', 'Today, 15:20', Colors.orange),
+        statusItem('viann', 'Today, 15:20', Colors.orange),
       ],
     );
   }
@@ -572,11 +572,11 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
 
-        callItem('Duns', 'Hari ini, 16:00', Colors.blue, Icons.call_received),
+        callItem('acaaaa', 'Hari ini, 16:00', Colors.blue, Icons.call_received),
 
-        callItem('Fadlan', 'Kemarin, 20:15', Colors.orange, Icons.call_made),
+        callItem('viann', 'Kemarin, 20:15', Colors.orange, Icons.call_made),
 
-        callItem('Andi', 'Kemarin, 18:30', Colors.purple, Icons.call_received),
+        callItem('cacaaku', 'Kemarin, 18:30', Colors.purple, Icons.call_received),
       ],
     );
   }
@@ -595,7 +595,7 @@ class _HomePageState extends State<HomePage> {
 
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 5,
             offset: const Offset(0, 2),
           ),

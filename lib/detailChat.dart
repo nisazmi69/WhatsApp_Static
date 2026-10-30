@@ -10,10 +10,10 @@ class Detailchat extends StatefulWidget {
 class _DetailchatState extends State<Detailchat> {
   final TextEditingController _messageController = TextEditingController();
   final List<String> _messages = [
-    'Halo, sudah sampai?',
-    'Sudah, sebentar lagi masuk.',
-    'Oke, aku tunggu di depan.',
-    'Siap, sebentar lagi sampai.',
+    'haaiiiii bb',
+    'haaiiiiiii bb',
+    'kitaa jadi mainn kannn',
+    'jadiiii dongggg',
   ];
 
   @override
@@ -45,9 +45,9 @@ class _DetailchatState extends State<Detailchat> {
           children: [
             const CircleAvatar(
               radius: 20,
-              backgroundColor: Color(0xFF25D366),
+              backgroundColor: Color.fromARGB(255, 57, 109, 198),
               child: Text(
-                'A',
+                'b',
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
@@ -56,7 +56,7 @@ class _DetailchatState extends State<Detailchat> {
             ),
             const SizedBox(width: 10),
             const Expanded(
-              child: Text('Alvin', style: TextStyle(fontSize: 17)),
+              child: Text('bebee', style: TextStyle(fontSize: 17)),
             ),
           ],
         ),
