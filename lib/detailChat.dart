@@ -1,5 +1,13 @@
 import 'package:flutter/material.dart';
 
+// 1. Model Data sesuai Materi Minggu 15 (OOP Dasar)
+class Message {
+  final String text;
+  final bool isMe;
+
+  Message({required this.text, required this.isMe});
+}
+
 class Detailchat extends StatefulWidget {
   const Detailchat({super.key});
 
@@ -8,26 +16,42 @@ class Detailchat extends StatefulWidget {
 }
 
 class _DetailchatState extends State<Detailchat> {
-  final TextEditingController _messageController = TextEditingController();
-  final List<String> _messages = [
-    'haaiiiii bb',
-    'haaiiiiiii bb',
-    'kitaa jadi mainn kannn',
-    'jadiiii dongggg',
+  // 2. Controller untuk input teks dan auto-scroll
+  final TextEditingController _chatController = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
+
+  // 3. Daftar pesan menggunakan class Message (dengan percakapanmu sebelumnya)
+  final List<Message> _messages = [
+    Message(text: 'haaiiiii bb', isMe: false),
+    Message(text: 'haaiiiiiii bb', isMe: true),
+    Message(text: 'kitaa jadi mainn kannn', isMe: false),
+    Message(text: 'jadiiii dongggg', isMe: true),
   ];
 
+  // 4. Manajemen memori (dispose kedua controller)
   @override
   void dispose() {
-    _messageController.dispose();
+    _chatController.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
+  // 5. Logika kirim pesan + auto-scroll ke pesan paling bawah
   void _sendMessage() {
-    final message = _messageController.text.trim();
-    if (message.isEmpty) return;
+    if (_chatController.text.trim().isEmpty) return;
     setState(() {
-      _messages.add(message);
-      _messageController.clear();
+      _messages.add(Message(text: _chatController.text.trim(), isMe: true));
+    });
+    _chatController.clear();
+
+    Future.delayed(const Duration(milliseconds: 100), () {
+      if (_scrollController.hasClients) {
+        _scrollController.animateTo(
+          _scrollController.position.maxScrollExtent,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+        );
+      }
     });
   }
 
@@ -73,14 +97,16 @@ class _DetailchatState extends State<Detailchat> {
         color: const Color(0xFFF5F7F8),
         child: Column(
           children: [
+            // 6. Area Chat Dinamis dengan ListView.builder & ScrollController
             Expanded(
               child: ListView.builder(
+                controller: _scrollController,
                 padding: const EdgeInsets.all(14),
                 itemCount: _messages.length,
                 itemBuilder: (context, index) {
-                  final isMine = index.isOdd;
+                  final msg = _messages[index];
                   return Align(
-                    alignment: isMine
+                    alignment: msg.isMe
                         ? Alignment.centerRight
                         : Alignment.centerLeft,
                     child: Container(
@@ -93,16 +119,18 @@ class _DetailchatState extends State<Detailchat> {
                         vertical: 9,
                       ),
                       decoration: BoxDecoration(
-                        color: isMine ? const Color(0xFFD9FDD3) : Colors.white,
+                        color: msg.isMe
+                            ? const Color(0xFFD9FDD3)
+                            : Colors.white,
                         borderRadius: BorderRadius.only(
                           topLeft: const Radius.circular(10),
                           topRight: const Radius.circular(10),
-                          bottomLeft: Radius.circular(isMine ? 10 : 2),
-                          bottomRight: Radius.circular(isMine ? 2 : 10),
+                          bottomLeft: Radius.circular(msg.isMe ? 10 : 2),
+                          bottomRight: Radius.circular(msg.isMe ? 2 : 10),
                         ),
                       ),
                       child: Text(
-                        _messages[index],
+                        msg.text,
                         style: const TextStyle(fontSize: 15),
                       ),
                     ),
@@ -110,6 +138,7 @@ class _DetailchatState extends State<Detailchat> {
                 },
               ),
             ),
+            // 7. Input dan Tombol Kirim
             SafeArea(
               top: false,
               child: Padding(
@@ -119,10 +148,11 @@ class _DetailchatState extends State<Detailchat> {
                   children: [
                     Expanded(
                       child: TextField(
-                        controller: _messageController,
+                        controller: _chatController,
                         minLines: 1,
                         maxLines: 4,
-                        textInputAction: TextInputAction.newline,
+                        textInputAction: TextInputAction.send,
+                        onSubmitted: (value) => _sendMessage(),
                         decoration: InputDecoration(
                           hintText: 'Ketik pesan',
                           filled: true,
